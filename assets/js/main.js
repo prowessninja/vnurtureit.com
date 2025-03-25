@@ -228,3 +228,29 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
 })();
+document.addEventListener("DOMContentLoaded", function() {
+  const contactForm = document.getElementById("contact-form");
+
+  if (contactForm) {
+      contactForm.addEventListener("submit", function(event) {
+          event.preventDefault(); // Prevent default form submission
+
+          let formData = new FormData(this);
+
+          fetch(this.action, {
+              method: "POST",
+              body: formData,
+              headers: { "Accept": "application/json" } // Ensure Formspree returns JSON
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.ok) {
+                  window.location.href = "/thanks?language=en"; // Redirect to Thank You page
+              } else {
+                  alert("Error submitting the form. Please try again!");
+              }
+          })
+          .catch(error => console.error("Error:", error));
+      });
+  }
+});
