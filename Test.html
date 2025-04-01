@@ -233,7 +233,7 @@
 
     <script>
         document.getElementById("testForm").addEventListener("submit", function(event) {
-            event.preventDefault();  // Prevent form from reloading the page
+            event.preventDefault(); // Prevent page refresh
 
             const formData = new FormData(event.target);
             const params = new URLSearchParams();
@@ -242,9 +242,9 @@
                 params.append(key, value.trim()); // Ensure no extra spaces
             }
 
-            fetch("https://script.google.com/macros/s/AKfycbyQJs4I_-o8LnlPys0W6GWTEqSgLlFuts-SKsvsphDLzX8beUC0TrIseqAYrsXNEcU/exec", {
+            fetch("YOUR_GOOGLE_SCRIPT_URL_HERE", {
                 method: "POST",
-                body: params,
+                body: params
             })
             .then(response => response.text())
             .then(data => {
