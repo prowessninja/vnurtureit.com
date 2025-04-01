@@ -1,34 +1,21 @@
 <!DOCTYPE html>
- <html>
- <head>
-   <title>Test</title>
-   <style>
-     /* Optional: Add some basic styling here */
-     body {
-       font-family: sans-serif;
-       margin: 20px;
-     }
-     input[type="radio"] {
-       margin-right: 10px;
-     }
-     p {
-       font-weight: bold;
-       margin-top: 20px;
-     }
-   </style>
- </head>
- <body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Test</title>
+</head>
+<body>
+    <h2>Online Test</h2>
+    
+    <form id="testForm">
+        <label>Name:</label>
+        <input type="text" name="Name" required><br><br>
 
-   <h1>Test - VnurtureIT</h1>
+        <label>Email:</label>
+        <input type="email" name="Email" required><br><br>
 
-   <form action="https://script.google.com/macros/s/AKfycbyQJs4I_-o8LnlPys0W6GWTEqSgLlFuts-SKsvsphDLzX8beUC0TrIseqAYrsXNEcU/exec" method="post">
-    <label for="name">Name:</label>
-<input type="text" id="name" name="Name" required><br>
-
-<label for="email">Email:</label>
-<input type="email" id="email" name="Email" required><br>
-   
-  <p>Aptitude (25 Questions)</p>
+        <p>Aptitude (25 Questions)</p>
   <p>1. If a train travels 120 km in 2 hours, what is its speed in km/hr?</p>
   <input type="radio" name="aptitude1" value="60"> 60 <input type="radio" name="aptitude1" value="120"> 120 <input type="radio" name="aptitude1" value="240"> 240 <input type="radio" name="aptitude1" value="30"> 30<br><br>
   <p>2. What is 20% of 150?</p>
@@ -239,13 +226,36 @@
     <p>100. Which SQL statement is used to create indexes?</p>
     <input type="radio" name="sql100" value="CREATE INDEX"> CREATE INDEX <input type="radio" name="sql100" value="BUILD INDEX"> BUILD INDEX <input type="radio" name="sql100" value="MAKE INDEX"> MAKE INDEX <input type="radio" name="sql100" value="INDEX"> INDEX<br><br>
 
-   
-  <input type="submit" value="Submit">
-   </form>
+        <button type="submit">Submit</button>
+    </form>
 
-   <script>
-     // Optional: Add JavaScript for client-side validation or other logic
-   </script>
+    <p id="responseMessage"></p>
 
- </body>
- </html>
+    <script>
+        document.getElementById("testForm").addEventListener("submit", function(event) {
+            event.preventDefault();  // Prevent form from reloading the page
+
+            const formData = new FormData(event.target);
+            const params = new URLSearchParams();
+
+            for (const [key, value] of formData.entries()) {
+                params.append(key, value.trim()); // Ensure no extra spaces
+            }
+
+            fetch("YOUR_GOOGLE_SCRIPT_URL_HERE", {
+                method: "POST",
+                body: params,
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("responseMessage").innerText = data;
+                document.getElementById("testForm").reset(); // Reset form after submission
+            })
+            .catch(error => {
+                document.getElementById("responseMessage").innerText = "Error submitting form!";
+                console.error("Submission Error:", error);
+            });
+        });
+    </script>
+</body>
+</html>
