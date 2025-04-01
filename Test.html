@@ -232,30 +232,31 @@
     <p id="responseMessage"></p>
 
     <script>
-        document.getElementById("testForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent page refresh
-
-            const formData = new FormData(event.target);
-            const params = new URLSearchParams();
-
-            for (const [key, value] of formData.entries()) {
-                params.append(key, value.trim()); // Ensure no extra spaces
-            }
-
-            fetch("https://script.google.com/macros/s/AKfycbyQJs4I_-o8LnlPys0W6GWTEqSgLlFuts-SKsvsphDLzX8beUC0TrIseqAYrsXNEcU/exec", {
-                method: "POST",
-                body: params
-            })
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById("responseMessage").innerText = data;
-                document.getElementById("testForm").reset(); // Reset form after submission
-            })
-            .catch(error => {
-                document.getElementById("responseMessage").innerText = "Error submitting form!";
-                console.error("Submission Error:", error);
-            });
-        });
-    </script>
+      document.getElementById("testForm").addEventListener("submit", function(event) {
+          event.preventDefault(); // Prevent page refresh
+  
+          const formData = new FormData(event.target);
+          const params = new URLSearchParams();
+  
+          for (const [key, value] of formData.entries()) {
+              params.append(key, value.trim()); // Ensure no extra spaces
+          }
+  
+          fetch("https://script.google.com/macros/s/AKfycbyQJs4I_-o8LnlPys0W6GWTEqSgLlFuts-SKsvsphDLzX8beUC0TrIseqAYrsXNEcU/exec", {
+              method: "POST",
+              body: params
+          })
+          .then(response => response.text())
+          .then(data => {
+              alert("Your test has been submitted successfully!"); // Show confirmation popup
+              window.location.href = "https://vnurtureit.com"; // Redirect after clicking OK
+          })
+          .catch(error => {
+              alert("Error submitting form! Please try again.");
+              console.error("Submission Error:", error);
+          });
+      });
+  </script>
+  
 </body>
 </html>
